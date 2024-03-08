@@ -1,7 +1,6 @@
 # gerador-de-produtos
 Script em python para gerar nomes de produtos aleatórios para testes em sistemas 
 
-# Documentação Técnica
 
 ## Descrição
 Este código Python gera uma lista de nomes de produtos fictícios com base em tipos, marcas e tamanhos aleatórios. A lista resultante é exibida no console.
@@ -21,8 +20,6 @@ Este código Python gera uma lista de nomes de produtos fictícios com base em t
 - `for i in range(quantidade):`: Loop para gerar nomes de produtos aleatórios.
 - `resultados`: Lista contendo os nomes de produtos gerados.
 - `for i in resultados:`: Loop para imprimir os nomes de produtos no console.
-
-# Apresentação (README) em Markdown
 
 ## Gerador de Nomes de Produtos
 
