@@ -1,4 +1,8 @@
 from random import randint
+import pandas as pd
+from sqlalchemy import create_engine
+import pyodbc
+from pprint import pprint
 
 quantidade = 97
 lista_de_nomes = []
@@ -82,14 +86,16 @@ for i in range(quantidade):
     variacao = Tamanho[randint(0, 7)]
     nome_completo += (variacao,)
 
-    nome_completo_str = ' '.join(nome_completo)
+    combinacoes_geradas.add(nome_completo)
 
-    if nome_completo_str not in combinacoes_geradas:
-        lista_de_nomes.append(nome_completo)
-        combinacoes_geradas.add(nome_completo_str)
+dataframe = pd.DataFrame(combinacoes_geradas, columns=['Nome', 'Marca', 'Variação'])
+
+conexao_str = 'sqlite:///base.db'
+engine = create_engine(conexao_str)
+
+# Enviar o DataFrame para o banco de dados SQLite
+dataframe.to_sql('produtos', con=engine, if_exists='replace', index=False)
+
+print('DataFrame enviado para o banco de dados com sucesso!')
 
 
-resultados = [' '.join(item) for item in lista_de_nomes]
-
-for i in resultados:
-    print(i)
