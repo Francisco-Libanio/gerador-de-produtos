@@ -1,10 +1,9 @@
 from random import randint
+
 import pandas as pd
 from sqlalchemy import create_engine
-import pyodbc
-from pprint import pprint
 
-quantidade = 97
+
 lista_de_nomes = []
 tipo = [
     'Camiseta',
@@ -77,18 +76,27 @@ Tamanho = ['PP', 'P', 'M', 'G', 'GG', 'EXG', '2XX', '3XX']
 
 combinacoes_geradas = set()
 
-for i in range(quantidade):
-    nome_completo = ()
-    nome = tipo[randint(0, 26)]
-    nome_completo += (nome,)
-    marca = Marca[randint(0, 34)]
-    nome_completo += (marca,)
-    variacao = Tamanho[randint(0, 7)]
-    nome_completo += (variacao,)
 
-    combinacoes_geradas.add(nome_completo)
+def gerador_de_produto(quantidade):
+    for i in range(quantidade):
+        nome_completo = ()
+        nome = tipo[randint(0, 26)]
+        nome_completo += (nome,)
+        marca = Marca[randint(0, 34)]
+        nome_completo += (marca,)
+        variacao = Tamanho[randint(0, 7)]
+        nome_completo += (variacao,)
 
-dataframe = pd.DataFrame(combinacoes_geradas, columns=['Nome', 'Marca', 'Variação'])
+        combinacoes_geradas.add(nome_completo)
+
+    return combinacoes_geradas
+
+
+estoque = gerador_de_produto(5)
+print(estoque)
+# breakpoint()
+
+dataframe = pd.DataFrame(estoque, columns=['Nome', 'Marca', 'Variação'])
 
 conexao_str = 'sqlite:///base.db'
 engine = create_engine(conexao_str)
@@ -97,5 +105,3 @@ engine = create_engine(conexao_str)
 dataframe.to_sql('produtos', con=engine, if_exists='replace', index=False)
 
 print('DataFrame enviado para o banco de dados com sucesso!')
-
-
